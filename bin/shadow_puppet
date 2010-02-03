@@ -69,6 +69,10 @@ begin
       execute method is called. All output is printed to the console.
   EOF
 
+    opts.on('--noop', "Don't actually apply changes -- just show what would have happened") do
+      @noop = true
+    end
+
   end
 
   opts.parse!
@@ -88,7 +92,14 @@ begin
   klass = File.basename(filename, ".rb")
   require filename
   manifest = klass.camelize.constantize.new
-  manifest.execute! && exit(0)
+
+  if @noop
+    manifest.noop
+  else
+    manifest.execute!
+  end
+
+  exit(0)
 rescue Errno::EACCES
   puts "Please run shadow_puppet as root"
 rescue Exception => e

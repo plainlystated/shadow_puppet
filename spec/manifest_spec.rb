@@ -162,6 +162,47 @@ describe "A manifest" do
 
     end
 
+    describe "noop setting" do
+
+      it "is not set when calling execute" do
+        @manifest.execute
+        Puppet[:noop].should == false
+      end
+
+      it "is not set when calling execute!" do
+        @manifest.execute!
+        Puppet[:noop].should == false
+      end
+
+      describe "noop" do
+        it "sets the noop setting and calls execute" do
+          @manifest.should_receive(:execute) do
+            Puppet[:noop].should == true
+          end
+          @manifest.noop
+        end
+
+        it "cleans up after itself" do
+          @manifest.noop
+          Puppet[:noop].should == false
+        end
+      end
+
+      describe "noop!" do
+        it "sets the noop setting and calls execute!" do
+          @manifest.should_receive(:execute!) do
+            Puppet[:noop].should == true
+          end
+          @manifest.noop!
+        end
+
+        it "cleans up after itself" do
+          @manifest.noop!
+          Puppet[:noop].should == false
+        end
+      end
+    end
+
   end
 
   describe "that subclasses an existing manifest" do
