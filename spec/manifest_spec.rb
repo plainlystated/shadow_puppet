@@ -239,4 +239,15 @@ describe "A manifest" do
 
   end
 
+  describe "template" do
+    it "requires template_root to be configured" do
+      expect { BlankManifest.new.template('some_template.conf') }.to raise_error
+    end
+
+    it "returns the ERB'ed contents of a file" do
+      File.should_receive(:read).with('my/templates/live/here/some_template.conf.erb').and_return("1 plus 2 is <%= 1 + 2 %>")
+      WithTemplateRoot.new.template('some_template.conf.erb').should == "1 plus 2 is 3"
+    end
+  end
+
 end

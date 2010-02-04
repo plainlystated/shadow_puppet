@@ -93,3 +93,7 @@ class TestHelpers < ShadowPuppet::Manifest
   end
 
 end
+
+class WithTemplateRoot < ShadowPuppet::Manifest
+  configure(:template_root => "my/templates/live/here")
+end

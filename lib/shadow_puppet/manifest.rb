@@ -278,6 +278,13 @@ module ShadowPuppet
       execute!(force)
       Puppet[:noop] = old_noop_value
     end
+
+    # Grab the contects of a file which may or may not have ERB in it.
+    def template(file)
+      raise(ArgumentError, "Must set configure(:template_root => 'path_to_templates')") unless configuration.has_key?(:template_root)
+      ERB.new(File.read(File.join(configuration[:template_root], file))).result
+    end
+
     protected
 
     #Has this manifest instance been executed?
