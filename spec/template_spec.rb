@@ -19,7 +19,7 @@ describe "A template" do
 
       ShadowPuppet::Template.new('some_template.conf.erb', :sum => 4).render.should == "2 plus 2 is 4"
       expect do
-        ShadowPuppet::Template.new('some_template.conf.erb').render.should == "2 plus 2 is 4"
+        ShadowPuppet::Template.new('some_template.conf.erb').render
       end.to raise_error(NameError, /undefined local variable or method .sum./)
     end
 
