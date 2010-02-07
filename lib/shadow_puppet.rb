@@ -2,6 +2,7 @@ require 'puppet'
 require 'erb'
 require File.join(File.dirname(__FILE__) + '/shadow_puppet', 'core_ext.rb')
 require File.join(File.dirname(__FILE__) + '/shadow_puppet', 'manifest.rb')
+require File.join(File.dirname(__FILE__) + '/shadow_puppet', 'template.rb')
 
 class ShadowPuppet::Manifest::Setup < ShadowPuppet::Manifest
   recipe :setup_directories

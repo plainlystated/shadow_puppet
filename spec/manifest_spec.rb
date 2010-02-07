@@ -248,6 +248,11 @@ describe "A manifest" do
       File.should_receive(:read).with('my/templates/live/here/some_template.conf.erb').and_return("1 plus 2 is <%= 1 + 2 %>")
       WithTemplateRoot.new.template('some_template.conf.erb').should == "1 plus 2 is 3"
     end
+
+    it "supports sending a context" do
+      File.should_receive(:read).with('my/templates/live/here/some_template.conf.erb').and_return("1 plus 2 is <%= sum %>")
+      WithTemplateRoot.new.template('some_template.conf.erb', :sum => 3).should == "1 plus 2 is 3"
+    end
   end
 
 end

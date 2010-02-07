@@ -280,9 +280,11 @@ module ShadowPuppet
     end
 
     # Grab the contects of a file which may or may not have ERB in it.
-    def template(file)
-      raise(ArgumentError, "Must set configure(:template_root => 'path_to_templates')") unless configuration.has_key?(:template_root)
-      ERB.new(File.read(File.join(configuration[:template_root], file))).result
+    def template(file, locals = {})
+      raise(ArgumentError, "Must set configure(:template_root => '/path/to/templates/')") unless configuration.has_key?(:template_root)
+
+      template = Template.new(File.join(configuration[:template_root], file), locals)
+      template.render
     end
 
     protected
